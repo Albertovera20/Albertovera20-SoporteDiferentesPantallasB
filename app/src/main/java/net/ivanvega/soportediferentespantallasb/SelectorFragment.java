@@ -17,6 +17,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link SelectorFragment#newInstance} factory method to
@@ -77,6 +79,7 @@ public class SelectorFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View layout = inflater.inflate(
                 R.layout.selector_fragment_layout,
@@ -85,7 +88,7 @@ public class SelectorFragment extends Fragment {
         TextView label =
                 layout.findViewById(R.id.lblFrag);
 
-        label.setText("Esto es un fragmento con comportameinto");
+        label.setText("");
 
 
         recyclerViewLibros = layout.findViewById(R.id.recyclerView);
@@ -140,17 +143,31 @@ public class SelectorFragment extends Fragment {
 
                                 break;
                             case 1:
+
+
+
                                 Libro.ejemplosLibros().add(
                                         libroSelec);
                                 miAdaptadorPersonaliza
                                         .notifyItemInserted
                                                 (Libro.ejemplosLibros().size()-1);
 
+Snackbar.make(view,"Libro insertado",Snackbar.LENGTH_INDEFINITE).setAction("OK", new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
 
+    }
+}).show();
                                 break;
                             case 2:
-                                Libro.ejemplosLibros().remove(posLibro);
-                                miAdaptadorPersonaliza.notifyItemRemoved(posLibro);
+                                Snackbar.make(view,"¿Seguro de eliminar?", Snackbar.LENGTH_LONG).setAction("Si", new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                Libro.ejemplosLibros().remove(posLibro);
+                                                miAdaptadorPersonaliza.notifyItemRemoved(posLibro);
+                                            }
+                                        }).show();
+
 
                                 break;
 
